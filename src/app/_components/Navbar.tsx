@@ -1,20 +1,20 @@
 'use client';
 import React, { useState } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import gsap from 'gsap';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-    // @ts-expect-error: dynamic gsap usage, safe in browser context
-    if (typeof window !== 'undefined' && window.gsap) {
+    if (typeof window !== 'undefined') {
       const mobileMenu = document.querySelector('.mobile-menu');
-      if (!isMobileMenuOpen) {
-        // @ts-expect-error: dynamic gsap usage, safe in browser context
-        (window.gsap as any).fromTo(mobileMenu, 
+      if (!isMobileMenuOpen && mobileMenu) {
+        gsap.fromTo(
+          mobileMenu,
           { height: 0, opacity: 0 },
-          { height: 'auto', opacity: 1, duration: 0.3, ease: "power2.out" }
+          { height: 'auto', opacity: 1, duration: 0.3, ease: 'power2.out' }
         );
       }
     }
