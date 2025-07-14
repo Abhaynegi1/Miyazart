@@ -5,7 +5,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
   const gsap = typeof window !== 'undefined' ? window.gsap : undefined;
   if (!gsap) return;
 
-  // @ts-expect-error: gsap.timeline is not typed
   const heroTimeline = gsap.timeline();
 
   // Hero text animation
