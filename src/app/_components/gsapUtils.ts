@@ -2,10 +2,9 @@
 
 export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTMLElement>, heroImageRef: React.RefObject<HTMLElement>) {
   // @ts-expect-error: gsap is loaded dynamically and not typed on window
-  const gsap = typeof window !== 'undefined' ? window.gsap : undefined;
+  const gsap = typeof window !== 'undefined' ? (window as any).gsap : undefined;
   if (!gsap) return;
 
-  // @ts-expect-error: gsap.timeline is not typed
   const heroTimeline = gsap.timeline();
 
   // Hero text animation
@@ -23,7 +22,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
   );
 
   // Hero image animation (slightly delayed)
-  // @ts-expect-error: gsap.fromTo is not typed
   heroTimeline.fromTo(heroImageRef.current,
     {
       opacity: 0,
@@ -43,7 +41,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
   // Animate steps on scroll
   const stepCards = document.querySelectorAll('.step-card');
   stepCards.forEach((card, index) => {
-    // @ts-expect-error: gsap.fromTo is not typed
     gsap.fromTo(card,
       {
         opacity: 0,
@@ -68,7 +65,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
   });
 
   // Floating animation for hero image
-  // @ts-expect-error: gsap.to is not typed
   gsap.to(heroImageRef.current, {
     y: -10,
     duration: 2,
@@ -81,7 +77,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
   const buttons = document.querySelectorAll('.gsap-button');
   buttons.forEach(button => {
     button.addEventListener('mouseenter', () => {
-      // @ts-expect-error: gsap.to is not typed
       gsap.to(button, {
         scale: 1.05,
         duration: 0.3,
@@ -89,7 +84,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
       });
     });
     button.addEventListener('mouseleave', () => {
-      // @ts-expect-error: gsap.to is not typed
       gsap.to(button, {
         scale: 1,
         duration: 0.3,
@@ -100,7 +94,6 @@ export function initializeLandingPageAnimations(heroTextRef: React.RefObject<HTM
 
   // Stagger animation for navigation items
   const navItems = document.querySelectorAll('.nav-item');
-  // @ts-expect-error: gsap.fromTo is not typed
   gsap.fromTo(navItems,
     {
       opacity: 0,
@@ -123,24 +116,21 @@ export function initializeScrollTriggerPlugin() {
   scrollTriggerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
   scrollTriggerScript.onload = () => {
     // @ts-expect-error: gsap and ScrollTrigger are loaded dynamically
-    if (window.gsap && window.ScrollTrigger) {
-      // @ts-expect-error: registerPlugin is not typed
-      window.gsap.registerPlugin(window.ScrollTrigger);
+    if ((window as any).gsap && (window as any).ScrollTrigger) {
+      (window as any).gsap.registerPlugin((window as any).ScrollTrigger);
     }
   };
   document.head.appendChild(scrollTriggerScript);
 }
 
 export function animateMobileMenu(isMobileMenuOpen: boolean) {
-  // @ts-expect-error: gsap is loaded dynamically and not typed on window
-  const gsap = typeof window !== 'undefined' ? window.gsap : undefined;
+  const gsap = typeof window !== 'undefined' ? (window as any).gsap : undefined;
   if (!gsap) return;
   const mobileMenu = document.querySelector('.mobile-menu');
   if (!isMobileMenuOpen && mobileMenu) {
-    // @ts-expect-error: gsap.fromTo is not typed
     gsap.fromTo(mobileMenu,
       { height: 0, opacity: 0 },
       { height: 'auto', opacity: 1, duration: 0.3, ease: "power2.out" }
     );
   }
-} 
+}
