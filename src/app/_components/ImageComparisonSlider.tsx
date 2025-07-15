@@ -41,7 +41,7 @@ const ImageComparisonSlider = () => {
     if (!rect) return;
     const touches = (e as TouchEvent).touches || (e as React.TouchEvent<HTMLDivElement>).touches;
     if (!touches || touches.length === 0) return;
-    const x = touches[0].clientX - (rect?.left ?? 0);
+    const x = touches[0]!.clientX - (rect?.left ?? 0);
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPosition(percentage);
   };
