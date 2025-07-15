@@ -40,7 +40,7 @@ const HowItWorksSection = () => {
             className="text-lg max-w-2xl mx-auto"
             style={{ color: '#6B6B6B' }}
           >
-            Our advanced AI technology transforms your photos into anime-style art in just a few simple steps.
+            We turn your everyday photos into beautiful, frame-worthy pieces of art. Just upload an image, and let our AI transform it into something timeless — crafted with creativity, guided by your moments.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

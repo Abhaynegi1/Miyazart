@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const ImageComparisonSlider = () => {
+interface ImageComparisonSliderProps {
+  beforeImage?: string;
+  afterImage?: string;
+}
+
+const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({ beforeImage = "/beforePhoto.jpeg", afterImage = "/afterPhoto.png" }) => {
   const [sliderPosition, setSliderPosition] = useState(50);
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-
-  // Sample images - you can replace these with your actual before/after images
-  const beforeImage = "/beforePhoto.jpeg";
-  const afterImage = "/afterPhoto.png";
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);

@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import HeroSection from '../_components/HeroSection';
 import HowItWorksSection from '../_components/HowItWorksSection';
+import ExploreMoreAISection from '../_components/ExploreMoreAISection';
 
 const MiyazArtLanding = () => {
   const heroRef = useRef(null);
@@ -64,6 +65,7 @@ const MiyazArtLanding = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#FAF4E8' }}>
       <HeroSection />
       <HowItWorksSection />
+      <ExploreMoreAISection />
     </div>
   );
 };
