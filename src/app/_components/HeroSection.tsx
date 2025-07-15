@@ -2,6 +2,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import ImageComparisonSlider from './ImageComparisonSlider';
+import Link from 'next/link';
 
 const HeroSection = () => {
   const heroRef = useRef(null);
@@ -54,15 +55,17 @@ const HeroSection = () => {
             >
               Why settle for selfies when you can be a sketch, a comic hero, or a renaissance masterpiece? Upload a photo, pick a style , and watch your image become frame-worthy in seconds. Its art magic. No paintbrush required.
             </p>
-            <button 
-              className="px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
-              style={{ 
-                backgroundColor: '#E7C74B',
-                color: '#000000'
-              }}
-            >
-              Convert Now
-            </button>
+            <Link href="/PhotoConverter">
+              <button 
+                className="px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:-translate-y-1"
+                style={{ 
+                  backgroundColor: '#E7C74B',
+                  color: '#000000'
+                }}
+              >
+                Convert Now
+              </button>
+            </Link>
           </div>
           {/* Right Content - Main Character Image */}
           <div className="relative">
