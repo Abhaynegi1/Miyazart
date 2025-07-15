@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 interface ImageComparisonSliderProps {
   beforeImage?: string;
@@ -100,35 +101,40 @@ const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({ beforeIma
       onTouchStart={handleTouchStart}
     >
       {/* After Image (Background) */}
-      <div className="absolute inset-0">
-        <img 
-          src={afterImage} 
-          alt="After" 
-          className="w-full h-full object-cover"
+      <div className="absolute inset-0" style={{ cursor: 'default' }}>
+        <Image
+          src={afterImage}
+          alt="After"
+          fill
+          style={{ objectFit: 'cover', cursor: 'default' }}
           draggable={false}
+          priority={true}
         />
       </div>
 
       {/* Before Image (Clipped) */}
       <div 
         className="absolute inset-0 overflow-hidden"
-        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`, cursor: 'default' }}
       >
-        <img 
-          src={beforeImage} 
-          alt="Before" 
-          className="w-full h-full object-cover"
+        <Image
+          src={beforeImage}
+          alt="Before"
+          fill
+          style={{ objectFit: 'cover', cursor: 'default' }}
           draggable={false}
+          priority={true}
         />
       </div>
 
       {/* Slider Handle */}
       <div 
-        className="absolute top-0 bottom-0 w-1 shadow-lg cursor-col-resize"
+        className="absolute top-0 bottom-0 w-1 shadow-lg"
         style={{ 
           left: `${sliderPosition}%`, 
           transform: 'translateX(-50%)',
-          backgroundColor: '#1C1C1C'
+          backgroundColor: '#1C1C1C',
+          cursor: 'default',
         }}
       >
         {/* Slider Button */}
@@ -136,7 +142,8 @@ const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({ beforeIma
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full shadow-lg border-2 flex items-center justify-center transition-all duration-200 hover:scale-110"
           style={{ 
             backgroundColor: '#FAF4E8', 
-            borderColor: '#C8C1B2'
+            borderColor: '#C8C1B2',
+            cursor: 'default',
           }}
           onMouseEnter={(e) => (e.currentTarget as HTMLDivElement).style.backgroundColor = '#E7C74B'}
           onMouseLeave={(e) => (e.currentTarget as HTMLDivElement).style.backgroundColor = '#FAF4E8'}
@@ -160,7 +167,8 @@ const ImageComparisonSlider: React.FC<ImageComparisonSliderProps> = ({ beforeIma
         style={{ 
           left: `${sliderPosition}%`, 
           transform: 'translateX(-50%)',
-          backgroundColor: '#1C1C1C'
+          backgroundColor: '#1C1C1C',
+          cursor: 'default',
         }}
       />
     </div>
