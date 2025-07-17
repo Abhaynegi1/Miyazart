@@ -37,6 +37,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <a href="#home" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Home</a>
             <a href="#features" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Features</a>
+            <a href="/blogs" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Blogs</a>
             <a href="#contact" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Contact</a>
             <button 
               className="gsap-button border-2 text-white px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-200 nav-item"
@@ -71,6 +72,7 @@ const Navbar = () => {
         <div className="px-4 py-2 space-y-2">
           <a href="#home" className="block py-2 text-white hover:text-yellow-300">Home</a>
           <a href="#features" className="block py-2 text-white hover:text-yellow-300">Features</a>
+          <a href="/blogs" className="block py-2 text-white hover:text-yellow-300">Blogs</a>
           <a href="#pricing" className="block py-2 text-white hover:text-yellow-300">Pricing</a>
           <a href="#contact" className="block py-2 text-white hover:text-yellow-300">Contact</a>
         </div>
