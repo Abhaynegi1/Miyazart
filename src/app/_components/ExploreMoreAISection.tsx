@@ -1,37 +1,26 @@
 import React, { useEffect, useRef } from 'react';
-import ImageComparisonSlider from './ImageComparisonSlider';
+import Link from 'next/link';
+import Image from 'next/image';
 
 const exploreItems = [
   {
-    title: 'Photo Enhancer',
-    description: 'Enhance photo resolution, quality and detail online 100% automatically.',
-    before: '/beforePhoto.jpeg',
-    after: '/afterPhoto.png',
+    title: 'Animefy',
+    description: 'Transform your photos into vibrant anime style art with just one click. Whether its bold lines, big eyes, or that signature anime glow Animefy brings your inner character to life in seconds.',
+    before: '/AnimefyBefore.jpeg',
+    after: '/AnimefyAfter.png',
   },
   {
-    title: 'AI Video Enhancer',
+    title: 'Background Remover',
     description: '4k video quality enhancer online can unblur video, increase resolution and improve quality of video.',
-    before: '/beforePhoto.jpeg',
-    after: '/afterPhoto.png',
+    before: '/RemoveBgBefore.jpeg',
+    after: '/RemoveBgAfter.png',
   },
   {
     title: 'Photo Animer',
     description: 'Turn photo into moving video and bring portrait to life.',
     before: '/beforePhoto.jpeg',
     after: '/afterPhoto.png',
-  },
-  {
-    title: 'Black & White Colorizer',
-    description: 'Colorize black and white photos instantly with AI.',
-    before: '/beforePhoto.jpeg',
-    after: '/afterPhoto.png',
-  },
-  {
-    title: 'Cartoonizer',
-    description: 'Transform your photo into a cartoon or comic style.',
-    before: '/beforePhoto.jpeg',
-    after: '/afterPhoto.png',
-  },
+  }
 ];
 
 const ExploreMoreAISection = () => {
@@ -66,6 +55,40 @@ const ExploreMoreAISection = () => {
           opacity: 0;
           transform: translateY(40px);
         }
+        /* Enhanced crossover animation */
+        .crossover-container {
+          position: relative;
+          width: 100%;
+          height: 100%;
+        }
+        .crossover-before {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 1;
+          transition: opacity 1s cubic-bezier(0.77,0,0.175,1), transform 1s cubic-bezier(0.77,0,0.175,1);
+        }
+        .crossover-after {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 2;
+          opacity: 0;
+          transform: scale(1.08);
+          transition: opacity 1s cubic-bezier(0.77,0,0.175,1), transform 1s cubic-bezier(0.77,0,0.175,1);
+        }
+        .group:hover .crossover-before {
+          opacity: 0;
+          transform: scale(0.96);
+        }
+        .group:hover .crossover-after {
+          opacity: 1;
+          transform: scale(1);
+        }
       `}</style>
       <section className="py-16 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: '#FAF4E8' }}>
         <div className="max-w-7xl mx-auto">
@@ -77,26 +100,58 @@ const ExploreMoreAISection = () => {
               <div
                 key={idx}
                 ref={el => { cardRefs.current[idx] = el; }}
-                className="card-animate rounded-2xl shadow-lg p-4 flex flex-col items-center border"
+                className="card-animate rounded-2xl shadow-lg p-4 flex flex-col items-center border h-[520px]"
                 style={{ backgroundColor: '#FAF4E8', borderColor: '#C8C1B2', borderWidth: 2 }}
               >
-                <div className="w-full aspect-[4/3] rounded-xl overflow-hidden mb-4">
-                  <ImageComparisonSlider beforeImage={item.before} afterImage={item.after} />
+                <div className="w-full aspect-[9/16] rounded-xl overflow-hidden mb-4 flex items-center justify-center bg-white relative group">
+                  {/* Enhanced crossover animation between before and after images */}
+                  <div className="crossover-container">
+                    <Image
+                      src={item.before}
+                      alt="before"
+                      width={500}
+                      height={500}
+                      className="crossover-before"
+                    />
+                    <Image
+                      src={item.after}
+                      alt="after"
+                      width={500}
+                      height={500}
+                      className="crossover-after"
+                    />
+                  </div>
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-center" style={{ color: '#1C1C1C' }}>{item.title}</h3>
-                <p className="text-center text-gray-600 mb-4">{item.description}</p>
-                <button
-                  className="px-6 py-2 rounded-full font-semibold transition-all duration-200 shadow border-2"
-                  style={{
-                    backgroundColor: '#E7C74B',
-                    color: '#000',
-                    borderColor: '#E7C74B',
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FFD600')}
-                  onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#E7C74B')}
-                >
-                  Explore
-                </button>
+                {item.title === 'Background Remover' ? (
+                  <Link href="/PhotoBackgroundRemover">
+                    <button
+                      className="px-6 py-2 rounded-full font-semibold transition-all duration-200 shadow border-2"
+                      style={{
+                        backgroundColor: '#E7C74B',
+                        color: '#000',
+                        borderColor: '#E7C74B',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FFD600')}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#E7C74B')}
+                    >
+                      Explore
+                    </button>
+                  </Link>
+                ) : (
+                  <button
+                    className="px-6 py-2 rounded-full font-semibold transition-all duration-200 shadow border-2"
+                    style={{
+                      backgroundColor: '#E7C74B',
+                      color: '#000',
+                      borderColor: '#E7C74B',
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FFD600')}
+                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#E7C74B')}
+                  >
+                    Explore
+                  </button>
+                )}
               </div>
             ))}
           </div>

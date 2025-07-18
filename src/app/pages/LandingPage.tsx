@@ -8,7 +8,6 @@ import ExploreMoreAISection from '../_components/ExploreMoreAISection';
 
 const MiyazArtLanding = () => {
   const heroRef = useRef(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const cardRef = useRef(null);
 
   useEffect(() => {

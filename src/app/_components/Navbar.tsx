@@ -1,10 +1,14 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
+import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isFeaturesOpen, setIsFeaturesOpen] = useState(false);
+  const featuresTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -18,6 +22,17 @@ const Navbar = () => {
         );
       }
     }
+  };
+
+  const handleFeaturesEnter = () => {
+    if (featuresTimeout.current) clearTimeout(featuresTimeout.current);
+    setIsFeaturesOpen(true);
+  };
+
+  const handleFeaturesLeave = () => {
+    featuresTimeout.current = setTimeout(() => {
+      setIsFeaturesOpen(false);
+    }, 250);
   };
 
   return (
@@ -35,9 +50,35 @@ const Navbar = () => {
           </div>
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Home</a>
-            <a href="#features" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Features</a>
-            <a href="/blogs" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Blogs</a>
+            <Link href="/" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Home</Link>
+            <div
+              className="relative"
+              onMouseEnter={handleFeaturesEnter}
+              onMouseLeave={handleFeaturesLeave}
+            >
+              <button
+                className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item flex items-center gap-1"
+                style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+              >
+                Features <ChevronDown className="w-4 h-4" />
+              </button>
+              <AnimatePresence>
+                {isFeaturesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.25, ease: 'easeInOut' }}
+                    className="absolute left-0 mt-2 w-48 bg-black rounded-xl shadow-lg py-2 z-50 border border-gray-700"
+                    style={{ pointerEvents: isFeaturesOpen ? 'auto' : 'none' }}
+                  >
+                    <Link href="/PhotoConverter" className="block px-4 py-2 text-white hover:bg-yellow-100 hover:text-black transition-colors duration-150">Animefy</Link>
+                    <Link href="/PhotoBackgroundRemover" className="block px-4 py-2 text-white hover:bg-yellow-100 hover:text-black transition-colors duration-150">Remove BG</Link>
+                    <Link href="#" className="block px-4 py-2 text-white hover:bg-yellow-100 hover:text-black transition-colors duration-150">Placeholder</Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
             <a href="#contact" className="text-white hover:text-yellow-300 transition-colors duration-200 nav-item">Contact</a>
             <button 
               className="gsap-button border-2 text-white px-6 py-2 rounded-full hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-200 nav-item"
@@ -70,9 +111,8 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div className={`mobile-menu md:hidden transition-all duration-300 ${isMobileMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'} overflow-hidden bg-black`}>
         <div className="px-4 py-2 space-y-2">
-          <a href="#home" className="block py-2 text-white hover:text-yellow-300">Home</a>
+          <Link href="/" className="block py-2 text-white hover:text-yellow-300">Home</Link>
           <a href="#features" className="block py-2 text-white hover:text-yellow-300">Features</a>
-          <a href="/blogs" className="block py-2 text-white hover:text-yellow-300">Blogs</a>
           <a href="#pricing" className="block py-2 text-white hover:text-yellow-300">Pricing</a>
           <a href="#contact" className="block py-2 text-white hover:text-yellow-300">Contact</a>
         </div>

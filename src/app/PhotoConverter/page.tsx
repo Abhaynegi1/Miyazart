@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
-import { Upload, Download, Image, Palette, Sparkles, Eye, ChevronDown, X } from 'lucide-react';
+import { Upload, Download, Palette, Sparkles, ChevronDown, X, Image as ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 interface ConversionTheme {
@@ -15,7 +16,6 @@ const PhotoConverter: React.FC = () => {
   const [convertedImage, setConvertedImage] = useState<string | null>(null);
   const [selectedTheme, setSelectedTheme] = useState<ConversionTheme | null>(null);
   const [isConverting, setIsConverting] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dropRef = useRef<HTMLDivElement>(null);
@@ -50,17 +50,14 @@ const PhotoConverter: React.FC = () => {
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragging(true);
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    setIsDragging(false);
     
     const files = e.dataTransfer.files;
     if (files.length > 0) {
@@ -223,7 +220,13 @@ const PhotoConverter: React.FC = () => {
                     onClick={() => setSelectedImage(src)}
                     className="w-12 h-12 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-pink-400 transition-all duration-300 hover:scale-105"
                   >
-                    <img src={src} alt={`Sample ${index + 1}`} className="w-full h-full object-cover" />
+                    <Image
+                      src={src}
+                      width={48}
+                      height={48}
+                      alt={`Sample ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
                   </button>
                 ))}
               </div>
@@ -257,8 +260,10 @@ const PhotoConverter: React.FC = () => {
                     <h3 className="text-xl font-semibold text-gray-900">Original</h3>
                   </div>
                   <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3]">
-                    <img
+                    <Image
                       src={selectedImage}
+                      width={600}
+                      height={450}
                       alt="Original"
                       className="w-full h-full object-cover"
                     />
@@ -274,7 +279,7 @@ const PhotoConverter: React.FC = () => {
                     </div>
                     <div className="flex items-center space-x-2">
                       <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <Image className="w-5 h-5 text-gray-400" />
+                        <ImageIcon className="w-5 h-5 text-gray-400" />
                       </button>
                       <span className="text-sm text-gray-500">Change Background</span>
                     </div>
@@ -283,8 +288,10 @@ const PhotoConverter: React.FC = () => {
                     {convertedImage ? (
                       <div className="relative w-full h-full">
                         <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 opacity-30"></div>
-                        <img
+                        <Image
                           src={convertedImage}
+                          width={600}
+                          height={450}
                           alt="Result"
                           className="w-full h-full object-cover"
                         />
@@ -299,7 +306,7 @@ const PhotoConverter: React.FC = () => {
                         ) : (
                           <div className="text-center">
                             <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <Image className="w-8 h-8 text-gray-400" />
+                              <ImageIcon className="w-8 h-8 text-gray-400" />
                             </div>
                             <p className="text-gray-500">Select style and convert</p>
                           </div>
