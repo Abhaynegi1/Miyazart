@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
+import Image from "next/image";
 
 const HowItWorksSection = () => {
   useEffect(() => {
@@ -48,19 +49,16 @@ const HowItWorksSection = () => {
           <div className="animate-on-scroll text-center">
             <div className="mb-6">
               <div 
-                className="w-full aspect-square rounded-2xl overflow-hidden shadow-lg mx-auto max-w-xs"
+                className="w-full aspect-square rounded-2xl overflow-hidden shadow-lg mx-auto max-w-xs relative"
                 style={{ backgroundColor: '#C8C1B2' }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-pink-200 flex items-center justify-center">
-                      <div className="text-2xl">👤</div>
-                    </div>
-                    <p style={{ color: '#1C1C1C' }} className="font-semibold">
-                      Portrait Photo
-                    </p>
-                  </div>
-                </div>
+                <Image
+                  src="/HowItWorksPFP.jpeg"
+                  alt="Portrait Photo"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-2xl"
+                />
               </div>
             </div>
             <h3 
@@ -106,29 +104,26 @@ const HowItWorksSection = () => {
           <div className="animate-on-scroll text-center">
             <div className="mb-6">
               <div 
-                className="w-full aspect-square rounded-2xl overflow-hidden shadow-lg mx-auto max-w-xs"
+                className="w-full aspect-square rounded-2xl overflow-hidden shadow-lg mx-auto max-w-xs relative"
                 style={{ backgroundColor: '#C8C1B2' }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-200 flex items-center justify-center">
-                      <div className="text-2xl">👥</div>
-                    </div>
-                    <p style={{ color: '#1C1C1C' }} className="font-semibold">
-                      Group Art
-                    </p>
-                  </div>
-                </div>
+                <Image
+                  src="/HowItWorksPFPAfter.png"
+                  alt="Group Art"
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  className="rounded-2xl"
+                />
               </div>
             </div>
             <h3 
               className="text-xl font-semibold mb-3"
               style={{ color: '#1C1C1C' }}
             >
-              Download Your Anime Art
+              Save Your Art Magic
             </h3>
             <p style={{ color: '#6B6B6B' }}>
-              Download your newly created anime art in high resolution and share it with the world.
+            Download your magical artwork in stunning quality and share your creativity everywhere.
             </p>
           </div>
         </div>
