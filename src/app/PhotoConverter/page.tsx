@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import { Upload, Download, Palette, Sparkles, ChevronDown, X, Image as ImageIcon } from 'lucide-react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -21,11 +22,12 @@ const PhotoConverter: React.FC = () => {
   const dropRef = useRef<HTMLDivElement>(null);
 
   const conversionThemes: ConversionTheme[] = [
-    { id: 'vintage', name: 'Vintage Film', description: 'Classic film photography look', color: '#8B4513' },
-    { id: 'cyberpunk', name: 'Cyberpunk Neon', description: 'Futuristic neon-lit aesthetic', color: '#00FFFF' },
-    { id: 'watercolor', name: 'Watercolor Art', description: 'Soft painted watercolor effect', color: '#87CEEB' },
-    { id: 'oil-painting', name: 'Oil Painting', description: 'Rich textured oil painting style', color: '#8B4513' },
-    { id: 'anime', name: 'Anime Style', description: 'Japanese animation art style', color: '#FF69B4' },
+    { id: 'ghibli', name: 'Ghibli', description: 'Whimsical Studio Ghibli-inspired art', color: '#A3D9A5' },
+    { id: 'demon-slayer', name: 'Demon Slayer', description: 'Bold and vibrant Demon Slayer style', color: '#FF6F61' },
+    { id: 'jojo', name: "JoJo's Bizarre Adventure", description: 'Dramatic and colorful JoJo flair', color: '#B39DDB' },
+    { id: 'naruto', name: 'Naruto', description: 'Energetic ninja-inspired Naruto look', color: '#F7C873' },
+    { id: 'attack-on-titan', name: 'Attack on Titan', description: 'Epic and intense Attack on Titan vibe', color: '#A1887F' },
+    { id: 'mob-psycho', name: 'Mob Psycho 100', description: 'Psychedelic Mob Psycho 100 effect', color: '#7DE2D1' },
     { id: 'black-white', name: 'Dramatic B&W', description: 'High contrast black and white', color: '#696969' }
   ];
 
@@ -108,7 +110,6 @@ const PhotoConverter: React.FC = () => {
               />
               <div>
                 <span className="font-medium text-sm">{selectedTheme.name}</span>
-                <p className="text-xs text-gray-500">{selectedTheme.description}</p>
               </div>
             </>
           ) : (
@@ -143,7 +144,6 @@ const PhotoConverter: React.FC = () => {
               />
               <div>
                 <span className="font-medium text-sm text-gray-900">{theme.name}</span>
-                <p className="text-xs text-gray-500">{theme.description}</p>
               </div>
             </button>
           ))}
@@ -152,17 +152,46 @@ const PhotoConverter: React.FC = () => {
     </div>
   );
 
+  // Calculate aspect ratio and set max dimensions for modal
+  let aspectRatio = 4 / 3;
+  let maxWidth = 480;
+  let maxHeight = 360;
+  if (selectedImage) {
+    const img = new window.Image();
+    img.src = selectedImage;
+    img.onload = () => {
+      aspectRatio = img.width / img.height;
+      if (aspectRatio > 1) {
+        maxWidth = 480;
+        maxHeight = Math.round(480 / aspectRatio);
+      } else {
+        maxHeight = 360;
+        maxWidth = Math.round(360 * aspectRatio);
+      }
+    };
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#FAF4E8' }}>
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4" style={{ color: '#1C1C1C' }}>
-            Photo Converter
-          </h1>
-          <p className="text-lg" style={{ color: '#6B6B6B' }}>
-            Convert your photos with the help of ai 
-          </p>
+        <div className="flex items-center justify-center mb-8 gap-2">
+          <Link href="/" className="group">
+            <button
+              className="flex items-center justify-center p-2 rounded-full transition-transform duration-200 group-hover:scale-110 group-hover:bg-gray-100"
+              style={{ outline: 'none', border: 'none', background: 'transparent' }}
+            >
+              <span className="text-2xl font-bold" style={{ color: '#1C1C1C', display: 'inline-block', transition: 'transform 0.2s' }}>&lt;</span>
+            </button>
+          </Link>
+          <div className="flex flex-col items-center flex-1">
+            <h1 className="text-4xl font-bold mb-1" style={{ color: '#1C1C1C' }}>
+              Photo Converter
+            </h1>
+            <p className="text-lg" style={{ color: '#6B6B6B' }}>
+              Convert your photos with the help of AI.
+            </p>
+          </div>
         </div>
 
         {/* Upload Section */}
@@ -236,9 +265,9 @@ const PhotoConverter: React.FC = () => {
 
         {/* Preview Section */}
         {selectedImage && (
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col items-center">
             {/* Close Button */}
-            <div className="flex justify-end p-4 pb-0">
+            <div className="flex justify-end w-full p-4 pb-0">
               <button
                 onClick={() => {
                   setSelectedImage(null);
@@ -251,51 +280,46 @@ const PhotoConverter: React.FC = () => {
               </button>
             </div>
 
-            <div className="p-8 pt-0">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="p-8 pt-0 w-full flex flex-col items-center">
+              <div
+                className="flex flex-col lg:flex-row gap-8 items-center justify-center w-full lg:items-center"
+              >
                 {/* Original Image */}
-                <div className="space-y-4">
+                <div className="space-y-4 flex flex-col items-center">
                   <div className="flex items-center space-x-3">
                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                     <h3 className="text-xl font-semibold text-gray-900">Original</h3>
                   </div>
-                  <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3]">
+                  <div
+                    className="relative rounded-2xl overflow-hidden border-2"
+                    style={{ width: maxWidth, height: maxHeight, borderColor: '#E7C74B', boxSizing: 'border-box' }}
+                  >
                     <Image
                       src={selectedImage}
-                      width={600}
-                      height={450}
                       alt="Original"
-                      className="w-full h-full object-cover"
+                      width={maxWidth}
+                      height={maxHeight}
                     />
                   </div>
                 </div>
 
                 {/* Result Image */}
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <h3 className="text-xl font-semibold text-gray-900">Result</h3>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                        <ImageIcon className="w-5 h-5 text-gray-400" />
-                      </button>
-                      <span className="text-sm text-gray-500">Change Background</span>
-                    </div>
+                <div className="space-y-5 flex flex-col items-center justify-center" style={{height: maxHeight, width: maxWidth}}>
+                  <div className="flex items-center space-x-3" style={{marginBottom: 0}}>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    <h3 className="text-xl font-semibold text-gray-900">Result</h3>
                   </div>
-                  <div className="relative rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3]">
+                  <div
+                    className="relative rounded-2xl overflow-hidden flex items-center justify-center border-2"
+                    style={{ width: maxWidth, height: maxHeight, borderColor: '#E7C74B', boxSizing: 'border-box' }}
+                  >
                     {convertedImage ? (
-                      <div className="relative w-full h-full">
-                        <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 opacity-30"></div>
-                        <Image
-                          src={convertedImage}
-                          width={600}
-                          height={450}
-                          alt="Result"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+                      <Image
+                        src={convertedImage}
+                        alt="Result"
+                        width={maxWidth}
+                        height={maxHeight}
+                      />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         {isConverting ? (
@@ -314,64 +338,58 @@ const PhotoConverter: React.FC = () => {
                       </div>
                     )}
                   </div>
-                </div>
-              </div>
-
-              {/* Controls */}
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <div className="flex flex-col lg:flex-row items-center justify-between space-y-4 lg:space-y-0 lg:space-x-4">
-                  {/* Convert Button */}
-                  <div className="flex space-x-3">
-                    <button
-                      onClick={handleConvert}
-                      disabled={!selectedImage || !selectedTheme || isConverting}
-                      className={`
-                        px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform
-                        ${!selectedImage || !selectedTheme || isConverting 
-                          ? 'bg-gray-400 cursor-not-allowed' 
-                          : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 hover:scale-105 shadow-lg hover:shadow-xl'
-                        }
-                      `}
-                    >
-                      <div className="flex items-center space-x-2">
-                        {isConverting ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                            <span>Processing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <Sparkles className="w-4 h-4" />
-                            <span>Convert</span>
-                          </>
-                        )}
+                  {/* Convert Button (hide if result is available) */}
+                  {!convertedImage && (
+                    <div className="w-full flex flex-col items-center gap-4 mt-4">
+                      <div className="min-w-[200px] mb-2">
+                        <CustomDropdown />
                       </div>
-                    </button>
-                  </div>
+                      <button
+                        onClick={handleConvert}
+                        disabled={!selectedImage || !selectedTheme || isConverting}
+                        className={`px-8 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform
+                          ${!selectedImage || !selectedTheme || isConverting 
+                            ? 'bg-gray-400 cursor-not-allowed' 
+                            : 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 hover:scale-105 shadow-lg hover:shadow-xl'
+                          }
+                        `}
+                        style={{ width: '100%' }}
+                      >
+                        <div className="flex items-center space-x-2 justify-center">
+                          {isConverting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                              <span>Processing...</span>
+                            </>
+                          ) : (
+                            <>
+                              <Sparkles className="w-4 h-4" />
+                              <span>Convert</span>
+                            </>
+                          )}
+                        </div>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Download Section */}
               {convertedImage && (
-                <div className="mt-6 pt-6 border-t border-gray-200">
-                  <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-                    <div className="text-sm text-gray-500">
-                      Preview Image 577 x 433, free
-                    </div>
-                    <motion.button
-                      whileHover={{ scale: 1.07, boxShadow: '0 4px 24px #E7C74B55' }}
-                      whileTap={{ scale: 0.97 }}
-                      className="flex items-center space-x-2 px-8 py-3 rounded-full font-bold shadow border-2 transition-all duration-200"
-                      style={{
-                        backgroundColor: '#E7C74B',
-                        color: '#000',
-                        borderColor: '#E7C74B',
-                      }}
-                    >
-                      <Download className="w-4 h-4" />
-                      <span className="text-base">Download</span>
-                    </motion.button>
-                  </div>
+                <div className="mt-6 pt-6 border-t border-gray-200 w-full flex justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.07, boxShadow: '0 4px 24px #E7C74B55' }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center space-x-2 px-8 py-3 rounded-full font-bold shadow border-2 transition-all duration-200"
+                    style={{
+                      backgroundColor: '#E7C74B',
+                      color: '#000',
+                      borderColor: '#E7C74B',
+                    }}
+                  >
+                    <Download className="w-4 h-4" />
+                    <span className="text-base">Download</span>
+                  </motion.button>
                 </div>
               )}
             </div>

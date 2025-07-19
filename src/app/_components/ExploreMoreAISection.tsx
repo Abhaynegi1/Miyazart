@@ -10,17 +10,17 @@ const exploreItems = [
     after: '/AnimefyAfter.png',
   },
   {
+    title: 'Posterize',
+    description: 'Transform your photo into a bold, poster-style artwork with striking colors and sharp contrasts.',
+    before: '/beforePhoto.jpeg',
+    after: '/afterPhoto.png',
+  },
+  {
     title: 'Background Remover',
-    description: '4k video quality enhancer online can unblur video, increase resolution and improve quality of video.',
+    description: 'Effortlessly erase backgrounds from your photos for a clean, professional look.',
     before: '/RemoveBgBefore.jpeg',
     after: '/RemoveBgAfter.png',
   },
-  {
-    title: 'Photo Animer',
-    description: 'Turn photo into moving video and bring portrait to life.',
-    before: '/beforePhoto.jpeg',
-    after: '/afterPhoto.png',
-  }
 ];
 
 const ExploreMoreAISection = () => {
@@ -125,6 +125,21 @@ const ExploreMoreAISection = () => {
                 <h3 className="text-xl font-bold mb-2 text-center" style={{ color: '#1C1C1C' }}>{item.title}</h3>
                 {item.title === 'Background Remover' ? (
                   <Link href="/PhotoBackgroundRemover">
+                    <button
+                      className="px-6 py-2 rounded-full font-semibold transition-all duration-200 shadow border-2"
+                      style={{
+                        backgroundColor: '#E7C74B',
+                        color: '#000',
+                        borderColor: '#E7C74B',
+                      }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FFD600')}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#E7C74B')}
+                    >
+                      Explore
+                    </button>
+                  </Link>
+                ) : item.title === 'Animefy' ? (
+                  <Link href="/PhotoConverter">
                     <button
                       className="px-6 py-2 rounded-full font-semibold transition-all duration-200 shadow border-2"
                       style={{

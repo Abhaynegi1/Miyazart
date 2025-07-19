@@ -8,7 +8,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2500); // Show loading for 3s
+    const timer = setTimeout(() => setLoading(false), 2000); // Show loading for 3s
     return () => clearTimeout(timer);
   }, []);
   return (

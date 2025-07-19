@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useRef } from 'react';
 import { Upload, Download, Sparkles, X } from 'lucide-react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -130,13 +131,23 @@ const PhotoBackgroundRemover: React.FC = () => {
     <div className="min-h-screen" style={{ backgroundColor: '#FAF4E8' }}>
       <main className="max-w-5xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4" style={{ color: '#1C1C1C' }}>
-            Photo Background Remover
-          </h1>
-          <p className="text-lg" style={{ color: '#6B6B6B' }}>
-            Instantly remove the background from your photo with AI.
-          </p>
+        <div className="flex items-center justify-center mb-8 gap-2">
+          <Link href="/" className="group">
+            <button
+              className="flex items-center justify-center p-2 rounded-full transition-transform duration-200 group-hover:scale-110 group-hover:bg-gray-100"
+              style={{ outline: 'none', border: 'none', background: 'transparent' }}
+            >
+              <span className="text-2xl font-bold" style={{ color: '#1C1C1C', display: 'inline-block', transition: 'transform 0.2s' }}>&lt;</span>
+            </button>
+          </Link>
+          <div className="flex flex-col items-center flex-1">
+            <h1 className="text-4xl font-bold mb-1" style={{ color: '#1C1C1C' }}>
+              Photo Background Remover
+            </h1>
+            <p className="text-lg" style={{ color: '#6B6B6B' }}>
+              Instantly remove the background from your photo with AI.
+            </p>
+          </div>
         </div>
 
         {/* Upload Section */}

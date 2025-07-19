@@ -84,7 +84,7 @@ const HowItWorksSection = () => {
                       <div className="text-2xl">🌅</div>
                     </div>
                     <p style={{ color: '#1C1C1C' }} className="font-semibold">
-                      Anime Style
+                      Choose your Style
                     </p>
                   </div>
                 </div>
